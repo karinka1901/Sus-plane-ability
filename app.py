@@ -1,26 +1,34 @@
 import json
-import os
-import mysql.connector
 from dotenv import load_dotenv
+import config
+import os
+
 from flask import Flask, request
 from flask_cors import CORS
-import config
+
 from game import Game
+import psycopg2
 
 load_dotenv()
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+print("Connecting to DB with user:", os.environ.get('DB_USER'))
+os.environ['DB_USER'] = 'postgres'
+os.environ['DB_PASS'] = '123'
 
-config.conn = mysql.connector.connect(
-        host=os.environ.get('HOST'),
-        port=3306,
-        database=os.environ.get('DB_NAME'),
-        user=os.environ.get('DB_USER'),
-        password=os.environ.get('DB_PASS'),
-        autocommit=True
+
+config.conn = psycopg2.connect(
+    host=os.environ.get('HOST'),
+    port=os.environ.get('PORT'),
+    database=os.environ.get('DB_NAME'),
+    user=os.environ.get('DB_USER'),
+    password=os.environ.get('DB_PASS')
 )
+config.conn.autocommit = True
+cursor = config.conn.cursor()
+
 
 
 def fly(id, dest, consumption=0, player=None):

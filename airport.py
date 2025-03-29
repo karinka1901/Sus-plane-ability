@@ -11,19 +11,16 @@ class Airport:
         self.active = active
 
         if data is None:
-            # find airport from DB
-            sql = "SELECT ident, name, latitude_deg, longitude_deg, iso_country FROM Airport WHERE ident='" + ident + "'"
+            sql = "SELECT ident, name, latitude_deg, longitude_deg, iso_country FROM airport WHERE ident = %s"
             cur = config.conn.cursor()
-            cur.execute(sql)
+            cur.execute(sql, (ident,))
             res = cur.fetchall()
             if len(res) == 1:
-                # game found
                 self.ident = res[0][0]
                 self.name = res[0][1]
                 self.latitude = float(res[0][2])
                 self.longitude = float(res[0][3])
                 self.iso_country = res[0][4]
-
         else:
             self.name = data['name']
             self.latitude = float(data['latitude'])
@@ -31,13 +28,22 @@ class Airport:
 
     def find_nearby_airports(self):
         nearby_list = []
-        sql = "SELECT ident, name, latitude_deg, longitude_deg FROM Airport WHERE latitude_deg BETWEEN "
-        sql += str(self.latitude - config.max_lat_dist) + " AND " + str(self.latitude + config.max_lat_dist)
-        sql += " AND longitude_deg BETWEEN "
-        sql += str(self.longitude - config.max_lon_dist) + " AND " + str(self.longitude + config.max_lon_dist)
+
+        lat_min = self.latitude - config.max_lat_dist
+        lat_max = self.latitude + config.max_lat_dist
+        lon_min = self.longitude - config.max_lon_dist
+        lon_max = self.longitude + config.max_lon_dist
+
+        sql = """
+            SELECT ident, name, latitude_deg, longitude_deg 
+            FROM airport 
+            WHERE latitude_deg BETWEEN %s AND %s 
+            AND longitude_deg BETWEEN %s AND %s
+        """
         cur = config.conn.cursor()
-        cur.execute(sql)
+        cur.execute(sql, (lat_min, lat_max, lon_min, lon_max))
         res = cur.fetchall()
+
         for r in res:
             if r[0] != self.ident:
                 data = {'name': r[1], 'latitude': r[2], 'longitude': r[3]}
@@ -47,6 +53,7 @@ class Airport:
                     nearby_list.append(nearby_apt)
                     nearby_apt.co2_consumption = self.co2_consumption(nearby_apt.distance)
         return nearby_list
+
 
     def fetchWeather(self, game):
         self.weather = Weather(self, game)

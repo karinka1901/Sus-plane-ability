@@ -129,7 +129,7 @@ class Game:
         cur.execute(sql)
    
     def random_location(self): #used for the start and dice3
-        sql4 = "SELECT ident FROM airport ORDER BY RAND() LIMIT 1"
+        sql4 = "SELECT ident FROM airport ORDER BY RANDOM() LIMIT 1"
         cursor = config.conn.cursor()
         cursor.execute(sql4)
         result = cursor.fetchall()
