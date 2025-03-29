@@ -37,9 +37,11 @@ Fetches country information when visiting each location.
 ###### Game Timer
 You have 3 minutes to purify all 50 countries before Earth is doomed.
 
+<p align="center">
+<img src="https://github.com/user-attachments/assets/ab388f3b-8894-4c67-8b7f-824c5c469153" alt="Description" >
+</p>
 
 
-https://github.com/user-attachments/assets/ce621408-1cd6-4fa2-9889-b44cc90cf05f
 
 
 ## Technologies Used
