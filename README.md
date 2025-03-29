@@ -22,12 +22,19 @@ and country info pulled from the database.
 Each flight consumes CO₂ based on distance. Exceeding your budget ends the game.
 ###### Dice of Fate Mechanic
 Each flight rolls a 1-6 die:
+
  1: Game over
+ 
  2: Detour (Double CO₂)
+ 
  3: Wrong destination (Random airport)
+ 
  4: Return to previous airport (Wasted CO₂)
+ 
  5: 50% CO₂ refund
+ 
  6: Full CO₂ refund
+ 
 ###### Goal Tracking
 Collected countries are tracked in the database. Every 10 countries reduces global pollution by 20%.
 ###### Live Weather Display
