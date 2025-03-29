@@ -14,7 +14,7 @@
 
 
 -- Dumping database structure for flight_game
-CREATE DATABASE IF NOT EXISTS `flight_game` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE `flight_game` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `flight_game`;
 
 -- Dumping structure for table flight_game.airport
